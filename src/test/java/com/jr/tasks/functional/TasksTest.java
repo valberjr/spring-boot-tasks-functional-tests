@@ -16,15 +16,17 @@ import java.util.concurrent.TimeUnit;
 public class TasksTest {
 
     public WebDriver acessarAplicacao() throws MalformedURLException {
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("/Applications/Chromium.app/Contents/MacOS/Chromium");
+
+        // ChromeOptions options = new ChromeOptions();
+        // options.setBinary("/Applications/Chromium.app/Contents/MacOS/Chromium");
 
         DesiredCapabilities cap = DesiredCapabilities.chrome();
-        cap.setCapability(ChromeOptions.CAPABILITY, options);
+        // cap.setCapability(ChromeOptions.CAPABILITY, options);
 
         // WebDriver driver = new ChromeDriver(options);
         WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.107:4444/wd/hub"), cap);
-        driver.navigate().to("http://localhost:8001/tasks");
+        // driver.navigate().to("http://localhost:8001/tasks");
+        driver.navigate().to("http://192.168.1.107:8001/tasks");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         return driver;
