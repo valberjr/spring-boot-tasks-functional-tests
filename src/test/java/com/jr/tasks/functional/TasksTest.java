@@ -6,16 +6,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class TasksTest {
 
-    public WebDriver acessarAplicacao() {
+    public WebDriver acessarAplicacao() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.setBinary("/Applications/Chromium.app/Contents/MacOS/Chromium");
 
-        WebDriver driver = new ChromeDriver(options);
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
+        cap.setCapability(ChromeOptions.CAPABILITY, options);
+
+        // WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.107:4444/wd/hub"), cap);
         driver.navigate().to("http://localhost:8001/tasks");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -23,7 +31,7 @@ public class TasksTest {
     }
 
     @Test
-    public void deveSalvarTarefaComSucesso() {
+    public void deveSalvarTarefaComSucesso() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
@@ -49,7 +57,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaSemDescricao() {
+    public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
@@ -72,7 +80,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaSemData() {
+    public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
@@ -95,7 +103,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaComDataPassada() {
+    public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
